@@ -1,0 +1,22 @@
+.button {
+  background-color: #32b77a;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 20px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: fit-content;
+  &:hover {
+    background-color: #97e3c0;
+    color: rgb(76, 76, 76);
+  }
+  .button__label {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.8rem;
+  }
+}

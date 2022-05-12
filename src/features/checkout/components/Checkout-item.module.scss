@@ -1,0 +1,87 @@
+@import "../../../utils/_theme.scss";
+
+.checkout_item_container {
+  width: 900px;
+  display: flex;
+  border-bottom: 1px solid darkgrey;
+  padding: 15px 0;
+  font-size: 20px;
+  align-items: center;
+  height: 200px;
+
+  .name_section {
+    height: inherit;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .name {
+      overflow: hidden;
+      font-size: 24px;
+      width: 390px;
+    }
+    .remove_button {
+      white-space: nowrap;
+      color: theme-color(action);
+      cursor: pointer;
+    }
+  }
+
+  .image_container {
+    width: 140px;
+    padding-right: 15px;
+
+    .image {
+      height: 180px;
+      cursor: pointer;
+    }
+  }
+  .price {
+    align-items: right;
+    text-align: right;
+    white-space: nowrap;
+    margin-left: 50px;
+    font-size: 30px;
+  }
+  .quantity {
+    display: flex;
+    justify-content: space-between;
+    border: 0.5px solid rgb(177, 177, 177);
+    border-radius: 5px;
+    font-size: 24px;
+    color: theme-color(priamry);
+    width: 120px;
+    padding: 0.8rem 0.5rem;
+    .quantity_buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      color: theme-color(action);
+      transition: all 250ms ease-in-out;
+      &:hover {
+        color: theme-color(hover);
+      }
+    }
+
+    .value {
+      padding: 0px 10px;
+      margin: 20 20 20 20px;
+    }
+  }
+}
+.cart_quantity {
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  margin-top: 0.7rem;
+  background: none;
+  color: gray;
+}
+.counter {
+  padding: 1rem 0;
+}

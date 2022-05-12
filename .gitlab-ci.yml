@@ -1,0 +1,91 @@
+# This pipeline checks if a commit has a specific target branch (dev/main), and if so, it will run the specified job to build and push.
+# If it doesn't, then its only going to try to build the image.
+# TODO:
+# - Test commands for the images
+# - Test stage
+stages:
+  - debug
+  - build
+# - test
+
+warning-no-registry-push:
+  stage: debug
+  rules:
+    - if: $CI_COMMIT_BRANCH != "dev" && $CI_COMMIT_BRANCH != "main"
+  before_script:
+    - echo "This pipeline's commit is NOT related to a MAIN or DEV branch, therefore no registry is being pushed to azure or gitlab. The build step will still occur to make sure that the docker image still builds."
+  script:
+    - echo "Printing all environment variables for debugging"
+    - env
+
+build-only-no-push:
+  stage: debug
+  rules:
+    - if: $CI_COMMIT_BRANCH != "dev" && $CI_COMMIT_BRANCH != "main"
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - echo "This stage will only test the docker image building capability of the branch, since its not from a MAIN or DEV branch, it will not be pushed to a registry."
+  script:
+    - docker build -t "$CI_AZURE_REGISTRY/$CI_PROJECT_NAME:dev" .
+  after_script:
+    - docker images
+
+dev-build-push:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - echo "$CI_AZURE_REGISTRY_PASSWORD" | docker login -u "$CI_AZURE_REGISTRY_USER" --password-stdin "$CI_AZURE_REGISTRY"
+  script:
+    # BUILD PHASE
+    # GitLab
+    - docker build -t "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:dev" .
+    - docker build -t "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:dev-$CI_PIPELINE_IID" .
+    # Azure
+    - docker build -t "$CI_AZURE_REGISTRY/$CI_PROJECT_NAME:dev" .
+    - docker build -t "$CI_AZURE_REGISTRY/$CI_PROJECT_NAME:dev-$CI_PIPELINE_IID" .
+
+    # PUSH PHASE
+    # GitLab
+    - docker push "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:dev"
+    - docker push "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:dev-$CI_PIPELINE_IID"
+    # Azure
+    - docker push "$CI_AZURE_REGISTRY/$CI_PROJECT_NAME:dev"
+    - docker push "$CI_AZURE_REGISTRY/$CI_PROJECT_NAME:dev-$CI_PIPELINE_IID"
+  after_script:
+    - docker images
+
+main-build-push:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - echo "$CI_AZURE_REGISTRY_PASSWORD" | docker login -u "$CI_AZURE_REGISTRY_USER" --password-stdin "$CI_AZURE_REGISTRY"
+  script:
+    # BUILD PHASE
+    # GitLab
+    - docker build -t "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest" .
+    - docker build -t "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest-$CI_PIPELINE_IID" .
+    # Azure
+    - docker build -t "$CI_AZURE_REGISTRY/$CI_PROJECT_NAME:latest" .
+    - docker build -t "$CI_AZURE_REGISTRY/$CI_PROJECT_NAME:latest-$CI_PIPELINE_IID" .
+
+    # PUSH PHASE
+    # GitLab
+    - docker push "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest"
+    - docker push "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest-$CI_PIPELINE_IID"
+    # Azure
+    - docker push "$CI_AZURE_REGISTRY/$CI_PROJECT_NAME:latest"
+    - docker push "$CI_AZURE_REGISTRY/$CI_PROJECT_NAME:latest-$CI_PIPELINE_IID"
+  after_script:
+    - docker images

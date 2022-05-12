@@ -1,0 +1,99 @@
+@import "../../../utils/_theme.scss";
+
+.bookCard__container {
+  width: 160px;
+  height: fit-content;
+  justify-content: space-between;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: 400ms;
+  cursor: pointer;
+  margin-bottom: 16px;
+  .bookCard_thumbnail__container {
+    position: relative;
+    width: 160px;
+    height: 220px;
+    padding-bottom: 10px;
+    overflow: hidden;
+    .bookCard_thumbnail__image {
+      width: 160px;
+      border-radius: 4px;
+    }
+    .bookCard_shopping__container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      color: theme-color(primary);
+      transition: 400ms;
+      .bookCard_addToCart__button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .bookCard_data__container {
+    width: 160px;
+    height: 100px;
+    padding-top: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    .bookCard_title__text {
+      font-size: 0.9rem;
+      font-weight: thin;
+      color: black;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 75ch;
+    }
+
+    .bookCard_author__text {
+      font-size: 0.8rem;
+      font-weight: thin;
+      color: gray;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 75ch;
+    }
+    .bookCard_ratings__container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 6px;
+      .bookCard_ratings__stars {
+        transition: 400ms;
+      }
+      .bookCard_ratings__text {
+        position: absolute;
+        opacity: 0;
+        transition: 400ms;
+      }
+    }
+    &:hover {
+      .bookCard_ratings__text {
+        opacity: 1;
+        transform: translateY(24px);
+      }
+    }
+  }
+}
+
+.bookCard__container:hover .bookCard_shopping__container {
+  opacity: 1;
+}
+
+.bookCard__container:hover {
+  background-color: rgb(223, 223, 223);
+}

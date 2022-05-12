@@ -1,0 +1,50 @@
+.MiniCart_item_container {
+  display: grid;
+
+  margin: 1em 0;
+  gap: 0px;
+  height: 7em;
+  border-bottom: 1px solid #e6e6e6;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
+  .image_container {
+    width: fit-content;
+    padding-right: 15px;
+
+    img {
+      width: 60px;
+      cursor: pointer;
+    }
+  }
+  .data_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .name {
+      font-size: 1em;
+      color: gray;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 15ch;
+    }
+    .quantity {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      font-size: 1em;
+    }
+    .price {
+      width: 100%;
+    }
+  }
+
+  .remove_button {
+    padding-left: 12px;
+    cursor: pointer;
+  }
+}

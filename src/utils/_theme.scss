@@ -1,0 +1,13 @@
+$color-action: #43a047;
+$color-primary: #424242;
+$color-action-hover: #116615;
+
+$theme-colors:(
+    action: $color-action,
+    hover: $color-action-hover,
+    primary: $color-primary
+);
+
+@function theme-color($key){
+    @return map-get($theme-colors, $key)
+}

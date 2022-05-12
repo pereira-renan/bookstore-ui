@@ -1,0 +1,36 @@
+.checkout_header {
+  font-size: 1.5rem;
+  font-weight: thin;
+  color: grey;
+  text-align: left;
+}
+
+.checkout_container {
+  overflow-y: scroll;
+  min-height: fit-content;
+  max-height: 60vh;
+  padding-right: 20px;
+
+  .checkout_button {
+    margin-top: 1em;
+  }
+}
+.checkout_container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.checkout_container::-webkit-scrollbar-thumb {
+  background: #3e9e3e;
+  border-radius: 10px;
+}
+
+.total {
+  width: 100%;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  text-align: center;
+}

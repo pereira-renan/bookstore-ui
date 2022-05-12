@@ -1,0 +1,63 @@
+@use '@/components/variables';
+.home__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: calc(100% - variables.$rightSidebar_Width - variables.$leftSidebar_Width);
+  margin-left: variables.$leftSidebar_Width;
+  margin-right: variables.$rightSidebar_Width;
+
+  .bookHorizontalDisplay__container::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .bookHorizontalDisplay__container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+
+  .bookHorizontalDisplay_heading {
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: thin;
+    color: grey;
+    text-align: left;
+  }
+
+  .bookHorizontalDisplay__container {
+    width: 100%;
+    height: fit-content;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    .bookHorizontalDisplay_listing__container {
+      display: grid;
+      height: fit-content;
+      grid-template-columns: repeat(100, minmax(160px, 1fr));
+      grid-gap: 10px;
+      margin-top: 20px;
+    }
+  }
+
+  .bookGridDisplay_heading {
+    padding-top: 60px;
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: thin;
+    color: grey;
+    text-align: left;
+  }
+
+  .bookGridDisplay__container {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    .bookGridDisplay_listing__container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-gap: 10px;
+      margin-top: 20px;
+    }
+  }
+}
